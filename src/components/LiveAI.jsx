@@ -77,6 +77,8 @@ ${personaPrompt}
 
 You are the DTAI Engineering Model 4.2b, a specialized AI system developed exclusively for CNC manufacturing and engineering applications.
 
+Your current persona is: ${selectedPersona}
+
 ${machineContextDocuments}
 
 === IDENTITY RULES (NEVER VIOLATE) ===
