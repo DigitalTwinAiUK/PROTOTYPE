@@ -26,3 +26,14 @@
 - [x] Build production files
 - [x] Create deployment package
 - [x] Write deployment instructions
+
+## Netlify Deployment Fix
+- [x] Create pre-built dist-only package for drag-and-drop
+- [x] Update deployment instructions for simple method
+- [x] Package ready for deployment
+
+## API Key Fix
+- [x] Found working BUILT_IN_FORGE_API_KEY
+- [x] Updated LiveAI to use built-in key
+- [x] Rebuilt with working key
+- [x] Created new deployment package

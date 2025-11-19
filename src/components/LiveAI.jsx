@@ -36,7 +36,7 @@ function LiveAI() {
 
     try {
       // Use built-in Manus API key from environment
-      const apiKey = import.meta.env.VITE_FRONTEND_FORGE_API_KEY || import.meta.env.VITE_MANUS_API_KEY
+      const apiKey = import.meta.env.VITE_FRONTEND_FORGE_API_KEY
 
       if (!apiKey) {
         throw new Error('Manus API key not configured. Please contact support.')
@@ -48,7 +48,7 @@ function LiveAI() {
         : ''
 
       // Call Manus Forge API
-      const apiUrl = import.meta.env.VITE_FRONTEND_FORGE_API_URL || 'https://api.manus.app'
+      const apiUrl = import.meta.env.VITE_FRONTEND_FORGE_API_URL
       const response = await fetch(`${apiUrl}/v1/chat/completions`, {
         method: 'POST',
         headers: {
