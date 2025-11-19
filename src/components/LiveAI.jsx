@@ -35,12 +35,9 @@ function LiveAI() {
     setIsLoading(true)
 
     try {
-      // Use built-in Manus API key from environment
-      const apiKey = import.meta.env.VITE_FRONTEND_FORGE_API_KEY
-
-      if (!apiKey) {
-        throw new Error('Manus API key not configured. Please contact support.')
-      }
+      // Hardcoded API credentials for static deployment
+      const apiKey = 'AQTd9QkHCSHHLieEZVCLJ6'
+      const apiUrl = 'https://forge.manus.ai'
 
       // Build context based on selected machine
       const machineContext = selectedMachine !== 'general' 
@@ -48,7 +45,6 @@ function LiveAI() {
         : ''
 
       // Call Manus Forge API
-      const apiUrl = import.meta.env.VITE_FRONTEND_FORGE_API_URL
       const response = await fetch(`${apiUrl}/v1/chat/completions`, {
         method: 'POST',
         headers: {

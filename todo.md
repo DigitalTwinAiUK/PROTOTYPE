@@ -37,3 +37,9 @@
 - [x] Updated LiveAI to use built-in key
 - [x] Rebuilt with working key
 - [x] Created new deployment package
+
+## Hardcoded API Credentials for Static Deployment
+- [x] Update LiveAI with hardcoded API key and URL
+- [x] Rebuild production files
+- [x] Create final deployment package
+- [x] Ready for deployment
