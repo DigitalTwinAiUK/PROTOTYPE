@@ -207,6 +207,11 @@ textarea {
     margin-top: 10px;
 }
 
+.drag-over {
+    border: 2px dashed #4ecca3 !important;
+    background-color: #0f34601a;
+}
+
 .file-input {
     border: 1px solid #4ecca3 !important;
     padding: 8px !important;

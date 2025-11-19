@@ -16,6 +16,7 @@ function Settings({ onSave, initialSettings }) {
   const [newDocumentName, setNewDocumentName] = useState('');
   const [newDocumentContent, setNewDocumentContent] = useState('');
   const fileInputRef = React.useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
   const [newPersonaName, setNewPersonaName] = useState('');
   const [newPersonaPrompt, setNewPersonaPrompt] = useState('');
 
@@ -112,8 +113,7 @@ function Settings({ onSave, initialSettings }) {
     }
   };
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
+  const handleFileChange = (file) => {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -121,6 +121,29 @@ function Settings({ onSave, initialSettings }) {
         setNewDocumentName(file.name);
       };
       reader.readAsText(file);
+    }
+  };
+
+  const handleFileInputChange = (event) => {
+    handleFileChange(event.target.files[0]);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      handleFileChange(e.dataTransfer.files[0]);
+      e.dataTransfer.clearData();
     }
   };
 
@@ -260,19 +283,23 @@ function Settings({ onSave, initialSettings }) {
                   value={newDocumentName}
                   onChange={(e) => setNewDocumentName(e.target.value)}
                 />
-                <input
-                  type="file"
-                  accept=".txt,.md,.log"
-                  onChange={handleFileChange}
-                  ref={fileInputRef}
-                  className="file-input"
-                />
-                <textarea
-                  placeholder="File content will appear here, or paste text directly..."
-                  value={newDocumentContent}
-                  onChange={(e) => setNewDocumentContent(e.target.value)}
-                  rows="5"
-                />
+	                <input
+	                  type="file"
+	                  accept=".txt,.md,.log"
+	                  onChange={handleFileInputChange}
+	                  ref={fileInputRef}
+	                  className="file-input"
+	                />
+	                <textarea
+	                  placeholder="File content will appear here, or paste text directly..."
+	                  value={newDocumentContent}
+	                  onChange={(e) => setNewDocumentContent(e.target.value)}
+	                  rows="5"
+	                  onDragOver={handleDragOver}
+	                  onDragLeave={handleDragLeave}
+	                  onDrop={handleDrop}
+	                  className={isDragging ? 'drag-over' : ''}
+	                />
                 <button onClick={handleAddDocument} className="add-button" disabled={!newDocumentName.trim() || !newDocumentContent.trim()}>Add Document</button>
                 <p className="help-text">The content of these documents will be sent to the AI as context when this machine is selected.</p>
               </div>
