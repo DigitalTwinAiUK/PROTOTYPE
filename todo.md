@@ -18,3 +18,11 @@
 ## Demo Access
 **URL**: https://5173-inu13nzh1421u5queyhbx-79a87567.manusvm.computer/
 **Password**: demo or cognitive2026
+
+## Netlify Deployment with Manus API
+- [x] Update LiveAI to call Manus API directly
+- [x] Add environment variable configuration
+- [x] Create Netlify config files
+- [x] Build production files
+- [x] Create deployment package
+- [x] Write deployment instructions

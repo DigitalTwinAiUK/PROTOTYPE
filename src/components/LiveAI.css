@@ -47,6 +47,37 @@
   margin-bottom: 0.75rem;
 }
 
+.sidebar-section label {
+  display: block;
+  color: #4ecca3;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.machine-select {
+  width: 100%;
+  padding: 0.5rem;
+  background: #0a0e27;
+  border: 2px solid #0f3460;
+  border-radius: 6px;
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.machine-select:focus {
+  outline: none;
+  border-color: #4ecca3;
+}
+
+.help-text {
+  color: #93a8ac;
+  font-size: 0.75rem;
+  font-style: italic;
+  margin: 0;
+}
+
 .sidebar-description {
   color: #93a8ac;
   font-size: 0.85rem;

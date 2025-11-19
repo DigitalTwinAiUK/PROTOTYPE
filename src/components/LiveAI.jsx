@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import './LiveAI.css'
 
 function LiveAI() {
@@ -10,8 +10,23 @@ function LiveAI() {
   ])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [selectedMachine, setSelectedMachine] = useState('general')
+  const messagesEndRef = useRef(null)
 
-  const handleSend = (question = input) => {
+  const machines = [
+    { id: 'general', name: 'General CNC Knowledge' },
+    { id: 'simply4', name: 'SIMPLY 4' },
+    { id: 'discovery8', name: 'DISCOVERY 8' },
+    { id: 'performance8', name: 'Performance 8' },
+    { id: 'academy1', name: 'Academy 1' },
+    { id: 'performance16', name: 'Performance 16ATC' }
+  ]
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
+
+  const handleSend = async (question = input) => {
     if (!question.trim() || isLoading) return
 
     const userMessage = { role: 'user', content: question }
@@ -19,14 +34,79 @@ function LiveAI() {
     setInput('')
     setIsLoading(true)
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      // Use built-in Manus API key from environment
+      const apiKey = import.meta.env.VITE_FRONTEND_FORGE_API_KEY || import.meta.env.VITE_MANUS_API_KEY
+
+      if (!apiKey) {
+        throw new Error('Manus API key not configured. Please contact support.')
+      }
+
+      // Build context based on selected machine
+      const machineContext = selectedMachine !== 'general' 
+        ? `The user is asking about the ${machines.find(m => m.id === selectedMachine)?.name} machine. `
+        : ''
+
+      // Call Manus Forge API
+      const apiUrl = import.meta.env.VITE_FRONTEND_FORGE_API_URL || 'https://api.manus.app'
+      const response = await fetch(`${apiUrl}/v1/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          model: 'claude-3-5-sonnet-20241022',
+          messages: [
+            {
+              role: 'system',
+              content: `You are an expert CNC machining instructor and specialist in Simply Technologies equipment. ${machineContext}
+
+Your expertise includes:
+- CNC machining fundamentals and G-code programming
+- Simply Technologies machine lineup (SIMPLY 4, DISCOVERY 8, Performance series, Academy 1)
+- The iCNC controller system
+- Manufacturing education and curriculum development
+- Technical troubleshooting and best practices
+- EMPOWER[ED] ACADEMY training programs
+
+Provide clear, educational responses tailored to the user's question. Use examples and step-by-step explanations when appropriate. Be encouraging and supportive of learning.`
+            },
+            ...messages.map(msg => ({
+              role: msg.role === 'assistant' ? 'assistant' : 'user',
+              content: msg.content
+            })),
+            {
+              role: 'user',
+              content: question
+            }
+          ],
+          temperature: 0.7,
+          max_tokens: 2000
+        })
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error?.message || `API request failed: ${response.status}`)
+      }
+
+      const data = await response.json()
+      const aiResponse = data.choices[0].message.content
+
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: 'This is a placeholder response. In production, this would connect to a real AI API to provide intelligent answers about CNC machining and Simply Technologies equipment.'
+        content: aiResponse
       }])
+    } catch (error) {
+      console.error('Error calling Manus API:', error)
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: `I apologize, but I encountered an error: ${error.message}\n\nPlease make sure your Manus API key is properly configured in the environment variables.`
+      }])
+    } finally {
       setIsLoading(false)
-    }, 1500)
+    }
   }
 
   const handleKeyPress = (e) => {
@@ -44,6 +124,23 @@ function LiveAI() {
           <p className="sidebar-description">
             Powered by DTAI technology, this is a real AI that can answer any question about CNC machining and Simply Technologies equipment.
           </p>
+        </div>
+
+        <div className="sidebar-section">
+          <label htmlFor="machine-context">Machine Context:</label>
+          <select
+            id="machine-context"
+            value={selectedMachine}
+            onChange={(e) => setSelectedMachine(e.target.value)}
+            className="machine-select"
+          >
+            {machines.map(machine => (
+              <option key={machine.id} value={machine.id}>
+                {machine.name}
+              </option>
+            ))}
+          </select>
+          <p className="help-text">Select a machine for context-specific answers</p>
         </div>
 
         <div className="sidebar-section">
@@ -107,6 +204,7 @@ function LiveAI() {
               </div>
             </div>
           )}
+          <div ref={messagesEndRef} />
         </div>
 
         <div className="input-area">
