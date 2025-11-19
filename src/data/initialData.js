@@ -14,6 +14,7 @@ export const initialPersonas = {
 };
 
 export const initialMachines = [
+  { id: 'none', name: 'None Selected', documents: [] },
   { id: 'general', name: 'General CNC Knowledge', documents: [] },
   { id: 'simply4', name: 'SIMPLY 4', documents: [] },
   { id: 'discovery8', name: 'DISCOVERY 8', documents: [] },

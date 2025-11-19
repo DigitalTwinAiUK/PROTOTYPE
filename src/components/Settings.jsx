@@ -11,7 +11,7 @@ function Settings({ onSave, initialSettings }) {
   }, [initialSettings]);
   const [activeTab, setActiveTab] = useState('personas');
   const [selectedPersona, setSelectedPersona] = useState(Object.keys(initialSettings.personas)[0] || 'Teacher');
-  const [selectedMachine, setSelectedMachine] = useState('general');
+  const [selectedMachine, setSelectedMachine] = useState('none');
   const [newMachineName, setNewMachineName] = useState('');
   const [newDocumentName, setNewDocumentName] = useState('');
   const [newDocumentContent, setNewDocumentContent] = useState('');
@@ -70,14 +70,14 @@ function Settings({ onSave, initialSettings }) {
   };
 
   const handleRemoveMachine = (id) => {
-    if (id === 'general') {
-      alert('The "General CNC Knowledge" machine cannot be removed.');
+    if (id === 'general' || id === 'none') {
+      alert('The "General CNC Knowledge" and "None Selected" machines cannot be removed.');
       return;
     }
     if (window.confirm(`Are you sure you want to remove the machine "${machines.find(m => m.id === id)?.name}"?`)) {
       const updatedMachines = machines.filter(m => m.id !== id);
       setMachines(updatedMachines);
-      setSelectedMachine('general'); // Fallback to general
+      setSelectedMachine('none'); // Fallback to none
     }
   };
 
