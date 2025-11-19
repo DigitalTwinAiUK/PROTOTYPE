@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import './App.css'
-import Demo from './components/Demo'
+
 import LiveAI from './components/LiveAI'
 import Login from './components/Login'
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [activeTab, setActiveTab] = useState('demo')
+  
 
   if (!isAuthenticated) {
     return <Login onLogin={() => setIsAuthenticated(true)} />
@@ -26,31 +26,10 @@ function App() {
         </div>
       </header>
 
-      <div className="tab-switcher">
-        <button 
-          className={activeTab === 'demo' ? 'active' : ''}
-          onClick={() => setActiveTab('demo')}
-        >
-          Demo
-        </button>
-        <label className="switch">
-          <input 
-            type="checkbox" 
-            checked={activeTab === 'live'}
-            onChange={(e) => setActiveTab(e.target.checked ? 'live' : 'demo')}
-          />
-          <span className="slider"></span>
-        </label>
-        <button 
-          className={activeTab === 'live' ? 'active' : ''}
-          onClick={() => setActiveTab('live')}
-        >
-          Live AI
-        </button>
-      </div>
+
 
       <main className="app-main">
-        {activeTab === 'demo' ? <Demo /> : <LiveAI />}
+        <LiveAI />
       </main>
 
       <footer className="app-footer">

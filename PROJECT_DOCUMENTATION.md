@@ -3,7 +3,7 @@
 ## Project Overview
 
 **Project Name**: DTAI Engineering Demo (Cognitive Twin)  
-**Purpose**: AI-powered CNC manufacturing assistant demo for client presentations  
+**Purpose**: AI-powered CNC manufacturing assistant with customizable personas and machine contexts for client presentations  
 **Target Client**: David Kerr (3M GBP business opportunity)  
 **Deployment**: Static Netlify deployment with Manus Forge API integration  
 **Created**: November 2024  
@@ -12,16 +12,16 @@
 
 ```
 cognitive-twin-demo/
-├── src/
-│   ├── components/
-│   │   ├── Login.jsx          # Password-protected login (demo/cognitive2026)
-│   │   ├── Login.css
-│   │   ├── Demo.jsx            # Pre-programmed Q&A demo tab
-│   │   ├── Demo.css
-│   │   ├── LiveAI.jsx          # Real AI chat with Manus Forge API
-│   │   └── LiveAI.css
-│   ├── data/
-│   │   └── demoQA.js           # 75+ pre-programmed Q&A scenarios
+	├── src/
+	│   ├── components/
+	│   │   ├── Login.jsx          # Password-protected login (demo/cognitive2026)
+	│   │   ├── Login.css
+	│   │   ├── Settings.jsx        # AI Persona and Machine Context Management
+	│   │   ├── Settings.css
+	│   │   ├── LiveAI.jsx          # Real AI chat with Manus Forge API
+	│   │   └── LiveAI.css
+	│   ├── data/
+	│   │   └── initialData.js      # Default AI Persona and Machine data
 │   ├── App.jsx                 # Main app with tab switching
 │   ├── App.css
 │   ├── main.jsx                # React entry point
@@ -38,20 +38,17 @@ cognitive-twin-demo/
 
 ## Key Features
 
-### 1. Dual-Mode Interface
+### 1. Live AI Interface with Customization
 
-**Demo Tab**:
-- Pre-programmed Q&A with 75+ scenarios
-- Instant responses (no API calls)
-- Covers CNC machining, Simply Technologies machines, G-code, education
-- Perfect for controlled demonstrations
+**Live AI Chat**:
+- Real-time AI responses via Manus Forge API.
+- **Dynamic Persona Selection**: User can select from Teacher, Engineer, or Student personas in the sidebar.
+- **Customizable Context**: Machine context selection is enhanced with the ability to upload reference documents (manuals, specs) via the Settings menu.
+- Security hardening against prompt injection and topic restrictions (CNC/engineering only).
 
-**Live AI Tab**:
-- Real-time AI responses via Manus Forge API
-- Custom DTAI Engineering Model 4.2b persona
-- Security hardening against prompt injection
-- Topic restrictions (CNC/engineering only)
-- Machine context selection (SIMPLY 4, DISCOVERY 8, etc.)
+**Settings Menu**:
+- Allows definition of custom system prompts for each AI persona.
+- Allows management of machine list and associated reference documents.
 
 ### 2. DTAI Branding
 
@@ -72,9 +69,9 @@ cognitive-twin-demo/
 
 ### Phase 1: Initial Development
 - Created React + Vite project structure
-- Built Login, Demo, and LiveAI components
-- Implemented 75+ pre-programmed Q&A scenarios
-- Added tab switching interface
+- Built Login and LiveAI components
+- **Refactored**: Removed Demo component and tab switching interface to focus on Live AI.
+- **New**: Implemented Settings component for persona and machine context management.
 
 ### Phase 2: Layout Fixes
 **Problem**: Live AI sidebar was being pushed off-screen when messages were added  
@@ -243,6 +240,10 @@ netlify deploy --prod --dir=dist
 - Flexbox allowed chat content to push sidebar up
 - Grid locks columns in place
 - Sidebar stays visible at all times
+
+**Why Custom Settings Menu?**
+- Allows user to dynamically define AI personas (Teacher, Engineer, Student) and their system prompts.
+- Enables the upload of machine-specific manuals/documents as context for the AI, significantly enhancing the demo's value.
 
 **Why Hardcoded API Key?**
 - Static Netlify deployment can't use environment variables at runtime

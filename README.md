@@ -6,7 +6,7 @@
 
 ## 🎯 Project Overview
 
-Professional demonstration platform showcasing AI-powered CNC manufacturing intelligence. Features dual-mode interface with pre-programmed Q&A and live AI chat powered by the DTAI Engineering Model 4.2b.
+Professional demonstration platform showcasing AI-powered CNC manufacturing intelligence. Features a single interface with a Live AI chat powered by the DTAI Engineering Model 4.2b, which can be customized via a new Settings menu.
 
 **Target**: Client presentations (David Kerr - 3M GBP opportunity)  
 **Status**: Production-ready  
@@ -14,17 +14,16 @@ Professional demonstration platform showcasing AI-powered CNC manufacturing inte
 
 ## ✨ Features
 
-### Demo Tab
-- 75+ pre-programmed CNC and manufacturing Q&A scenarios
-- Instant responses (no API calls)
-- Covers Simply Technologies equipment, G-code, education, troubleshooting
+### Settings Menu
+- Define custom AI personas (Teacher, Engineer, Student) with unique system prompts.
+- Manage machine contexts, including adding new machines.
+- Upload reference documents (manuals, specs) for context-aware AI responses.
 
-### Live AI Tab
-- Real-time AI responses via Manus Forge API
-- Custom DTAI Engineering Model 4.2b persona
-- Machine context selection (SIMPLY 4, DISCOVERY 8, Performance series, Academy 1)
-- Security hardening against prompt injection
-- Topic restrictions (CNC/engineering only)
+### Live AI Chat
+- Real-time AI responses via Manus Forge API.
+- Dynamic AI persona selection (Teacher, Engineer, Student) from the sidebar.
+- Machine context selection, now enhanced with custom reference documents.
+- Security hardening against prompt injection and topic restrictions (CNC/engineering only).
 
 ### Security & Branding
 - Password-protected access
@@ -94,13 +93,13 @@ netlify deploy --prod --dir=dist
 
 ```
 cognitive-twin-demo/
-├── src/
-│   ├── components/
-│   │   ├── Login.jsx/css       # Password-protected login
-│   │   ├── Demo.jsx/css        # Pre-programmed Q&A
-│   │   └── LiveAI.jsx/css      # Real AI chat
-│   ├── data/
-│   │   └── demoQA.js           # Q&A content
+	├── src/
+	│   ├── components/
+	│   │   ├── Login.jsx/css       # Password-protected login
+	│   │   ├── Settings.jsx/css    # AI Persona and Machine Context Management
+	│   │   └── LiveAI.jsx/css      # Real AI chat
+	│   ├── data/
+	│   │   └── initialData.js      # Default AI Persona and Machine data
 │   ├── App.jsx/css             # Main app
 │   └── main.jsx                # Entry point
 ├── public/
@@ -136,13 +135,10 @@ const model = 'claude-3-5-sonnet-20241022'
 - Colors: Modify CSS variables in component files
 - Company name: Search and replace "Simply Technologies"
 
-**Add Demo Content**:
-- Edit `src/data/demoQA.js`
-- Add new Q&A scenarios following existing format
-
-**Modify AI Persona**:
-- Edit system prompt in `src/components/LiveAI.jsx`
-- Adjust security rules and topic restrictions
+**Manage AI Personas and Contexts**:
+- Use the new **Settings** menu (⚙️ button in the sidebar) to:
+  - Define the system prompt for the Teacher, Engineer, and Student personas.
+  - Add new machines and upload reference documents (manuals, specs) as text for context-aware responses.
 
 ## 🛡️ Security
 
