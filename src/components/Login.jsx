@@ -17,9 +17,11 @@ function Login({ onLogin }) {
   return (
     <div className="login-container">
       <div className="login-box">
-        <div className="logo-large">🤖</div>
-        <h1>Cognitive Twin Demo</h1>
-        <p className="subtitle">AI Teaching Assistant for CNC Education</p>
+        <div className="logo-large">
+          <img src="/assets/DTAI_Icon_Col.svg" alt="DTAI Logo" style={{width: '100px', height: '100px'}} />
+        </div>
+        <h1>DTAI Engineering Demo</h1>
+        <p className="subtitle">AI-Powered CNC Manufacturing Assistant</p>
         
         <form onSubmit={handleSubmit}>
           <label htmlFor="password">Enter Access Password</label>
@@ -38,7 +40,7 @@ function Login({ onLogin }) {
           <button type="submit">Access Demo</button>
         </form>
 
-        <p className="footer-text">Digital Twin AI Ltd. | Confidential</p>
+        <p className="footer-text">Simply Technologies | Confidential</p>
       </div>
     </div>
   )

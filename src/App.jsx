@@ -17,12 +17,12 @@ function App() {
       <header className="app-header">
         <div className="header-left">
           <div className="logo">
-            <div className="logo-icon">🤖</div>
-            <h1>Cognitive Twin</h1>
+            <img src="/assets/DTAI_Icon_Col.svg" alt="DTAI" style={{width: '40px', height: '40px', marginRight: '12px'}} />
+            <h1>DTAI Engineering</h1>
           </div>
         </div>
         <div className="header-right">
-          <p className="tagline">AI Teaching Assistant for Simply Technologies CNC Education</p>
+          <p className="tagline">AI-Powered CNC Manufacturing Intelligence</p>
         </div>
       </header>
 
@@ -54,7 +54,7 @@ function App() {
       </main>
 
       <footer className="app-footer">
-        <p>Digital Twin AI Ltd. | Confidential | AI Partner for Simply Technologies</p>
+        <p>Simply Technologies | Confidential | Powered by DTAI Engineering Model 4.2b</p>
       </footer>
     </div>
   )
