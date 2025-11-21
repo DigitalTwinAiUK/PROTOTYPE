@@ -180,7 +180,7 @@ const MachinesTab = ({ machines, setMachines, selectedMachine, setSelectedMachin
 };
 
 // 4. Colors Tab
-const ColorsTab = ({ colors, setColors, themes, setThemes, selectedTheme, setSelectedTheme, newThemeName, setNewThemeName, handleRestoreColors, handleSaveTheme, handleUpdateTheme, handleDeleteTheme, handleSave }) => {
+const ColorsTab = ({ colors, setColors, themes, setThemes, selectedTheme, setSelectedTheme, newThemeName, setNewThemeName, handleRestoreColors, handleSaveTheme, handleUpdateTheme, handleDeleteTheme, handleSave, onUpdateSettings, initialSettings, coreRules, personas, machines }) => {
   
   const handleColorChange = (key, value) => {
     setColors(prev => {
@@ -199,7 +199,7 @@ const ColorsTab = ({ colors, setColors, themes, setThemes, selectedTheme, setSel
       // Propagate theme selection immediately to LiveAI for UI update
       onUpdateSettings({ newSettings: { ...initialSettings, colors: newColors, themes, coreRules, personas, machines }, newCoreRules: coreRules, newColors: newColors });
     }
-  }, [selectedTheme, themes, setColors]);
+  }, [selectedTheme, themes, setColors, onUpdateSettings, initialSettings, coreRules, personas, machines]);
 
   return (
     <div className="color-settings">
@@ -607,9 +607,14 @@ function Settings({ onSave, onUpdateSettings, initialSettings }) {
             handleRestoreColors={handleRestoreColors}
             handleSaveTheme={handleSaveTheme}
             handleUpdateTheme={handleUpdateTheme}
-            handleDeleteTheme={handleDeleteTheme}
-            handleSave={handleSaveColors}
-          />
+              handleDeleteTheme={handleDeleteTheme}
+              handleSave={handleSaveColors}
+              onUpdateSettings={onUpdateSettings}
+              initialSettings={initialSettings}
+              coreRules={coreRules}
+              personas={personas}
+              machines={machines}
+            />
         )}
       </div>
     </div>
