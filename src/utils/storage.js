@@ -34,6 +34,9 @@ export const saveSettings = (settings) => {
 };
 
 // Function to set the default settings (called once from LiveAI)
-export const setDefaultSettings = (personas, machines) => {
-    defaultSettings = { personas, machines };
+export const setDefaultSettings = (personas, machines, coreRules, colors) => {
+    const themes = {
+        'Default': colors
+    };
+    defaultSettings = { personas, machines, coreRules, colors, themes };
 }

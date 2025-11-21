@@ -8,14 +8,24 @@
     margin: 20px auto;
 }
 
-.settings-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #0f3460;
-    padding-bottom: 10px;
-}
+	.settings-header {
+	    display: flex;
+	    justify-content: space-between;
+	    align-items: center;
+	    margin-bottom: 20px;
+	    border-bottom: 1px solid #0f3460;
+	    padding-bottom: 10px;
+	}
+
+	.save-message {
+	    background-color: #4ecca3;
+	    color: #16213e;
+	    padding: 10px;
+	    border-radius: 4px;
+	    margin-bottom: 15px;
+	    text-align: center;
+	    font-weight: bold;
+	}
 
 .settings-header h2 {
     color: #4ecca3;
@@ -37,28 +47,104 @@
     background-color: #3aa885;
 }
 
-.remove-button {
+
+
+
+
+.persona-list, .machine-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.persona-list select, .machine-list select {
+    min-height: 100px;
+}
+
+.persona-editor textarea {
+    margin-top: 5px;
+}
+
+.add-persona, .add-machine {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    border: 1px solid #0f3460;
+    border-radius: 4px;
+}
+
+.add-persona button, .add-machine button {
+    align-self: flex-start;
+}
+
+.theme-selector-section {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #0f3460;
+    border-radius: 4px;
+}
+
+.theme-selector-section select {
+    width: 200px;
+}
+
+.theme-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    border: 1px solid #0f3460;
+    border-radius: 4px;
+}
+
+.theme-save-group, .theme-update-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.theme-save-group input {
+    flex-grow: 1;
+}
+
+.secondary-button {
+    background-color: #0f3460;
+    color: #4ecca3;
+    border: 1px solid #4ecca3;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.secondary-button:hover {
+    background-color: #0a274e;
+}
+
+.delete-button {
     background-color: #a83a3a;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 8px 15px;
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s;
-    margin-top: 10px;
 }
 
-.remove-button:hover:not(:disabled) {
+.delete-button:hover:not(:disabled) {
     background-color: #8c2f2f;
 }
 
-.remove-button:disabled {
+.delete-button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-.remove-doc-button {
+.delete-button-small {
     background: none;
     border: none;
     color: #a83a3a;
@@ -68,20 +154,8 @@
     float: right;
 }
 
-.remove-doc-button:hover {
+.delete-button-small:hover {
     color: #8c2f2f;
-}
-
-.persona-list-section {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.persona-list-section .remove-button {
-    margin-top: 0;
-    padding: 8px 15px;
-    font-size: 0.9rem;
 }
 
 .settings-tabs {
@@ -112,35 +186,51 @@
     border-radius: 4px;
 }
 
-.persona-settings, .m.color-settings {
+.core-rules-settings, .personas-settings, .machines-settings, .color-settings {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
+.color-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
 .color-input-group {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 5px;
     padding: 10px;
     border: 1px solid #0f3460;
     border-radius: 4px;
 }
 
 .color-input-group label {
-    font-weight: normal;
+    font-weight: bold;
+    color: #4ecca3;
 }
 
 .color-input-group input[type="color"] {
-    width: 50px;
-    height: 30px;
+    width: 100%;
+    height: 40px;
     padding: 0;
     border: none;
     cursor: pointer;
     background: none;
+    margin-bottom: 5px;
 }
 
-.persona-settings h3, .machine-settings h3 {
+.color-input-group input[type="text"] {
+    text-align: center;
+}
+
+
+
+
+
+.core-rules-settings h3, .personas-settings h3, .machines-settings h3, .color-settings h3 {
     color: #4ecca3;
     margin-top: 0;
 }
@@ -170,31 +260,11 @@ textarea {
     margin-top: -10px;
 }
 
-.add-machine-input {
-    display: flex;
-    gap: 10px;
-}
 
-.add-button {
-    background-color: #0f3460;
-    color: #4ecca3;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    white-space: nowrap;
-}
 
-.add-button:hover {
-    background-color: #0a274e;
-}
 
-.document-management {
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px solid #0f3460;
-}
+
+
 
 .document-list {
     list-style: none;
@@ -222,19 +292,33 @@ textarea {
     padding: 10px;
 }
 
-.add-document-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+
+
+.file-upload-area {
+    border: 2px dashed #0f3460;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s;
     margin-top: 10px;
+    border-radius: 4px;
 }
 
-.drag-over {
-    border: 2px dashed #4ecca3 !important;
+.file-upload-area.dragging {
+    border-color: #4ecca3;
     background-color: #0f34601a;
 }
 
-.file-input {
-    border: 1px solid #4ecca3 !important;
-    padding: 8px !important;
+.document-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    border: 1px solid #0f3460;
+    border-radius: 4px;
+}
+
+.document-preview textarea {
+    background-color: #16213e;
+    border: 1px solid #0f3460;
 }
