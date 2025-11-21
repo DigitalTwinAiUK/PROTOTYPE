@@ -98,8 +98,9 @@ function LiveAI() {
       const apiKey = 'AQTd9QkHCSHHLieEZVCLJ6'
       const apiUrl = 'https://forge.manus.ai'
 
-      // Build context based on selected machine and persona
-      const currentMachine = settings.machines.find(m => m.id === selectedMachine)
+	      // Build context based on selected machine and persona
+	      // Use the stable 'machines' array for context lookup
+	      const currentMachine = machines.find(m => m.id === selectedMachine)
       const machineContextDocuments = currentMachine && selectedMachine !== 'none' 
         ? `\n\n=== MACHINE CONTEXT: ${currentMachine.name} ===\n${currentMachine.documents.map(doc => doc.content).join('\n\n')}`
         : ''
