@@ -220,45 +220,45 @@ import './Settings.css';
 	            <p className="help-text">Change the main interface colors. You will need to save and refresh the page for changes to take full effect.</p>
 	            <button onClick={handleRestoreColors} className="add-button" style={{ marginBottom: '15px' }}>Restore Default Colors</button>
 	            
-	            <div className="color-input-group">
-	              <label htmlFor="primary-color">Primary Color (e.g., Buttons, User Chat):</label>
-	              <input 
-	                type="color" 
-	                id="primary-color" 
-	                value={colors.primary}
-	                onChange={(e) => setColors({...colors, primary: e.target.value})}
-	              />
-	            </div>
+		            <div className="color-input-group">
+		              <label htmlFor="primary-color">Primary Color (e.g., Buttons, User Chat):</label>
+		              <input 
+		                type="color" 
+		                id="primary-color" 
+		                value={colors.primary}
+		                onChange={(e) => setColors({...colors, primary: e.target.value})}
+		              />
+		            </div>
 	            
-	            <div className="color-input-group">
-	              <label htmlFor="secondary-color">Secondary Color (e.g., AI Chat, Highlights):</label>
-	              <input 
-	                type="color" 
-	                id="secondary-color" 
-	                value={colors.secondary}
-	                onChange={(e) => setColors({...colors, secondary: e.target.value})}
-	              />
-	            </div>
+		            <div className="color-input-group">
+		              <label htmlFor="secondary-color">Secondary Color (e.g., AI Chat, Highlights):</label>
+		              <input 
+		                type="color" 
+		                id="secondary-color" 
+		                value={colors.secondary}
+		                onChange={(e) => setColors({...colors, secondary: e.target.value})}
+		              />
+		            </div>
 	            
-	            <div className="color-input-group">
-	              <label htmlFor="background-color">Background Color:</label>
-	              <input 
-	                type="color" 
-	                id="background-color" 
-	                value={colors.background}
-	                onChange={(e) => setColors({...colors, background: e.target.value})}
-	              />
-	            </div>
+		            <div className="color-input-group">
+		              <label htmlFor="background-color">Background Color:</label>
+		              <input 
+		                type="color" 
+		                id="background-color" 
+		                value={colors.background}
+		                onChange={(e) => setColors({...colors, background: e.target.value})}
+		              />
+		            </div>
 	            
-	            <div className="color-input-group">
-	              <label htmlFor="text-color">Text Color:</label>
-	              <input 
-	                type="color" 
-	                id="text-color" 
-	                value={colors.text}
-	                onChange={(e) => setColors({...colors, text: e.target.value})}
-	              />
-	            </div>
+		            <div className="color-input-group">
+		              <label htmlFor="text-color">Text Color:</label>
+		              <input 
+		                type="color" 
+		                id="text-color" 
+		                value={colors.text}
+		                onChange={(e) => setColors({...colors, text: e.target.value})}
+		              />
+		            </div>
 	          </div>
 	        )}
 	        {activeTab === 'personas' && (

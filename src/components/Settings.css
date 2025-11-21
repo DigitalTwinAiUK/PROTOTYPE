@@ -112,10 +112,32 @@
     border-radius: 4px;
 }
 
-.persona-settings, .machine-settings {
+.persona-settings, .m.color-settings {
     display: flex;
     flex-direction: column;
     gap: 15px;
+}
+
+.color-input-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #0f3460;
+    border-radius: 4px;
+}
+
+.color-input-group label {
+    font-weight: normal;
+}
+
+.color-input-group input[type="color"] {
+    width: 50px;
+    height: 30px;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    background: none;
 }
 
 .persona-settings h3, .machine-settings h3 {
