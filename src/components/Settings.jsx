@@ -10,7 +10,7 @@ const CoreRulesTab = ({ coreRules, setCoreRules, handleSave }) => (
     <p className="help-text">These rules define the AI's fundamental identity, security, and base behavior. They are applied before any persona instructions.</p>
     <textarea
       value={coreRules.rules}
-      onChange={(e) => setCoreRules({ rules: e.target.value })}
+      onChange={(e) => setCoreRules(prev => ({ ...prev, rules: e.target.value }))}
       rows="15"
       placeholder="Enter core system rules here..."
     />
@@ -485,7 +485,7 @@ function Settings({ onSave, onUpdateSettings, initialSettings }) {
 
   const handleSaveColors = () => {
     const newSettings = { ...initialSettings, colors, themes, coreRules, personas, machines };
-    onUpdateSettings({ newSettings, newCoreRules: colors, newColors: colors }); // newCoreRules is irrelevant here, but newColors is important
+    onUpdateSettings({ newSettings, newCoreRules: coreRules, newColors: colors });
     showSaveMessage('Interface Colors and Themes saved successfully!');
   };
 

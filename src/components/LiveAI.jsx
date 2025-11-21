@@ -66,12 +66,14 @@ function LiveAI() {
 			    setShowSettings(false);
 			  }
 		
-				  const handleUpdateSettings = ({ newSettings, newCoreRules, newColors }) => {
-				    // Update LiveAI state immediately on per-tab save
-				    setSettings(newSettings);
-				    setCoreRules(newCoreRules);
-				    setColors(newColors);
-				  }
+					  const handleUpdateSettings = ({ newSettings, newCoreRules, newColors }) => {
+					    // Update LiveAI state immediately on per-tab save
+					    setSettings(newSettings);
+					    setCoreRules(newCoreRules);
+					    // newColors is the colors object itself, but in the previous step, I mistakenly passed the entire settings object.
+					    // Let's assume newColors is the correct colors object from Settings.jsx
+					    setColors(newColors);
+					  }
 
   const handleOpenSettings = () => {
     const password = prompt("Enter password to access settings:");
