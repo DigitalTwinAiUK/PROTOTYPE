@@ -183,13 +183,21 @@ const MachinesTab = ({ machines, setMachines, selectedMachine, setSelectedMachin
 const ColorsTab = ({ colors, setColors, themes, setThemes, selectedTheme, setSelectedTheme, newThemeName, setNewThemeName, handleRestoreColors, handleSaveTheme, handleUpdateTheme, handleDeleteTheme, handleSave }) => {
   
   const handleColorChange = (key, value) => {
-    setColors(prev => ({ ...prev, [key]: value }));
+    setColors(prev => {
+      const newColors = { ...prev, [key]: value };
+      // Propagate color change immediately to LiveAI for UI update
+      onUpdateSettings({ newSettings: { ...initialSettings, colors: newColors, themes, coreRules, personas, machines }, newCoreRules: coreRules, newColors: newColors });
+      return newColors;
+    });
   };
 
   // When a theme is selected, apply its colors to the color picker state
   useEffect(() => {
     if (themes[selectedTheme]) {
-      setColors(themes[selectedTheme]);
+      const newColors = themes[selectedTheme];
+      setColors(newColors);
+      // Propagate theme selection immediately to LiveAI for UI update
+      onUpdateSettings({ newSettings: { ...initialSettings, colors: newColors, themes, coreRules, personas, machines }, newCoreRules: coreRules, newColors: newColors });
     }
   }, [selectedTheme, themes, setColors]);
 
