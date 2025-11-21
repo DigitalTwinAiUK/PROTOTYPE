@@ -104,17 +104,23 @@ function LiveAI() {
         ? `\n\n=== MACHINE CONTEXT: ${currentMachine.name} ===\n${currentMachine.documents.map(doc => doc.content).join('\n\n')}`
         : ''
       
-      const personaPrompt = settings.personas[selectedPersona]?.prompt || settings.personas['Engineer'].prompt // Fallback to Engineer
-      const systemPrompt = `${coreRules.rules}
-
-=== PERSONA INSTRUCTIONS (OVERRIDE ALL STYLE/TONE RULES) ===
-${personaPrompt}
-
-=== MACHINE CONTEXT ===
-Your current persona is: ${selectedPersona}
-${machineContextDocuments}
-
-Now respond to the user's question:`;
+	      const personaPrompt = settings.personas[selectedPersona]?.prompt || settings.personas['Engineer'].prompt // Fallback to Engineer
+	      const machineName = currentMachine ? currentMachine.name : 'No specific machine selected (General Context)';
+	      
+	      const systemPrompt = `${coreRules.rules}
+	
+	=== PERSONA INSTRUCTIONS (OVERRIDE ALL STYLE/TONE RULES) ===
+	${personaPrompt}
+	
+	=== MACHINE CONTEXT ===
+	Your current persona is: ${selectedPersona}
+	Your current machine context is: ${machineName}
+	
+	**CRITICAL INSTRUCTION:** If the user asks which machine or persona you are currently using, you MUST explicitly state the values: "${machineName}" for the machine and "${selectedPersona}" for the persona.
+	
+	${machineContextDocuments}
+	
+	Now respond to the user's question:`;
       const response = await fetch(`${apiUrl}/v1/chat/completions`, {
         method: 'POST',
         headers: {
