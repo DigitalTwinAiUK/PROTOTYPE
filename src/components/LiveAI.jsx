@@ -46,7 +46,8 @@ function LiveAI() {
 	  })
   const messagesEndRef = useRef(null)
 
-  const machines = settings.machines
+	  const machines = settings.machines
+	  const personas = settings.personas
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -204,16 +205,16 @@ Now respond to the user's question:`;
           <div className="sidebar-section">
             <label htmlFor="persona-context">AI Persona:</label>
             <select
-              id="persona-context"
-              value={selectedPersona}
-              onChange={(e) => setSelectedPersona(e.target.value)}
-              className="persona-select"
-            >
-              {Object.keys(settings.personas).map(key => (
-                <option key={key} value={key}>
-                  {key}
-                </option>
-              ))}
+	              id="persona-context"
+	              value={selectedPersona}
+	              onChange={(e) => setSelectedPersona(e.target.value)}
+	              className="persona-select"
+	            >
+	              {Object.keys(personas).map(key => (
+	                <option key={key} value={key}>
+	                  {key}
+	                </option>
+	              ))}
             </select>
             <p className="help-text">Select the AI's role for the conversation.</p>
           </div>
