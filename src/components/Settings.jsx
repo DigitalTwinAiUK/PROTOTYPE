@@ -186,33 +186,12 @@ const ColorsTab = ({ colors, setColors, themes, setThemes, selectedTheme, setSel
     setColors(prev => ({ ...prev, [key]: value }));
   };
 
-  // Function to propagate color changes to LiveAI for UI update
-  const propagateColors = useCallback((newColors) => {
-    onUpdateSettings({ 
-      newSettings: { ...initialSettings, colors: newColors, themes, coreRules, personas, machines }, 
-      newCoreRules: coreRules, 
-      newColors: newColors 
-    });
-  }, [onUpdateSettings, initialSettings, themes, coreRules, personas, machines]);
-
-  // Effect to immediately propagate color changes to LiveAI for UI update
-  useEffect(() => {
-    // Only propagate if the colors have actually changed from the initial state
-    // and we are not in the middle of a theme selection (which is handled below)
-    if (JSON.stringify(colors) !== JSON.stringify(themes[selectedTheme])) {
-      propagateColors(colors);
-    }
-  }, [colors, themes, selectedTheme, propagateColors]);
-
   // When a theme is selected, apply its colors to the color picker state
   useEffect(() => {
     if (themes[selectedTheme]) {
-      const newColors = themes[selectedTheme];
-      setColors(newColors);
-      // Propagate theme selection immediately to LiveAI for UI update
-      propagateColors(newColors);
+      setColors(themes[selectedTheme]);
     }
-  }, [selectedTheme, themes, setColors, propagateColors]);
+  }, [selectedTheme, themes, setColors]);
 
   return (
     <div className="color-settings">
@@ -435,6 +414,8 @@ function Settings({ onSave, onUpdateSettings, initialSettings }) {
   const handleRestoreColors = (themeName = 'Default') => {
     const defaultColors = themes[themeName] || themes['Default'];
     setColors(defaultColors);
+    // Propagate restored colors immediately to LiveAI for UI update
+    onUpdateSettings({ newSettings: { ...initialSettings, colors: defaultColors, themes, coreRules, personas, machines }, newCoreRules: coreRules, newColors: defaultColors });
   };
 
   const handleSaveTheme = () => {
@@ -454,6 +435,8 @@ function Settings({ onSave, onUpdateSettings, initialSettings }) {
     setNewThemeName('');
     setSelectedTheme(newThemeName.trim());
     showSaveMessage(`Theme "${newThemeName.trim()}" saved!`);
+    // Propagate theme change immediately to LiveAI for UI update
+    onUpdateSettings({ newSettings: { ...initialSettings, colors, themes: newThemes, coreRules, personas, machines }, newCoreRules: coreRules, newColors: colors });
   };
 
   const handleUpdateTheme = () => {
@@ -467,6 +450,8 @@ function Settings({ onSave, onUpdateSettings, initialSettings }) {
     };
     setThemes(newThemes);
     showSaveMessage(`Theme "${selectedTheme}" updated!`);
+    // Propagate theme change immediately to LiveAI for UI update
+    onUpdateSettings({ newSettings: { ...initialSettings, colors, themes: newThemes, coreRules, personas, machines }, newCoreRules: coreRules, newColors: colors });
   };
 
   const handleDeleteTheme = () => {
@@ -480,6 +465,8 @@ function Settings({ onSave, onUpdateSettings, initialSettings }) {
       setSelectedTheme('Default');
       setColors(rest['Default']);
       showSaveMessage(`Theme "${selectedTheme}" deleted.`);
+      // Propagate theme change immediately to LiveAI for UI update
+      onUpdateSettings({ newSettings: { ...initialSettings, colors: rest['Default'], themes: rest, coreRules, personas, machines }, newCoreRules: coreRules, newColors: rest['Default'] });
     }
   };
 
