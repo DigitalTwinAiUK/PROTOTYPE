@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './Settings.css';
 
-function Settings({ onSave, initialSettings }) {
-  const [personas, setPersonas] = useState(initialSettings.personas);
-  const [machines, setMachines] = useState(initialSettings.machines);
-
-  useEffect(() => {
-    setPersonas(initialSettings.personas);
-    setMachines(initialSettings.machines);
-  }, [initialSettings]);
-  const [activeTab, setActiveTab] = useState('personas');
+	function Settings({ onSave, initialSettings }) {
+	  const [personas, setPersonas] = useState(initialSettings.personas);
+	  const [machines, setMachines] = useState(initialSettings.machines);
+	  const [coreRules, setCoreRules] = useState(initialSettings.coreRules);
+	  const [colors, setColors] = useState(initialSettings.colors);
+	
+	  useEffect(() => {
+	    setPersonas(initialSettings.personas);
+	    setMachines(initialSettings.machines);
+	    setCoreRules(initialSettings.coreRules);
+	    setColors(initialSettings.colors);
+	  }, [initialSettings]);
+	  const [activeTab, setActiveTab] = useState('core');
   const [selectedPersona, setSelectedPersona] = useState(Object.keys(initialSettings.personas)[0] || 'Teacher');
   const [selectedMachine, setSelectedMachine] = useState('none');
   const [newMachineName, setNewMachineName] = useState('');
@@ -147,9 +151,19 @@ function Settings({ onSave, initialSettings }) {
     }
   };
 
-  const handleSave = () => {
-    onSave({ personas, machines });
-  };
+	  const handleRestoreColors = () => {
+	    const defaultColors = {
+	      primary: '#0f3460',
+	      secondary: '#4ecca3',
+	      background: '#232931',
+	      text: '#eeeeee',
+	    };
+	    setColors(defaultColors);
+	  };
+	
+	  const handleSave = () => {
+	    onSave({ personas, machines, coreRules, colors });
+	  };
 
   const currentMachine = machines.find(m => m.id === selectedMachine);
 
@@ -160,23 +174,94 @@ function Settings({ onSave, initialSettings }) {
         <button onClick={handleSave} className="save-button">Save Settings</button>
       </div>
       
-      <div className="settings-tabs">
-        <button 
-          className={activeTab === 'personas' ? 'active' : ''} 
-          onClick={() => setActiveTab('personas')}
-        >
-          AI Personas
-        </button>
-        <button 
-          className={activeTab === 'machines' ? 'active' : ''} 
-          onClick={() => setActiveTab('machines')}
-        >
-          Machine Contexts
-        </button>
-      </div>
-
-      <div className="settings-content">
-        {activeTab === 'personas' && (
+	      <div className="settings-tabs">
+	        <button 
+	          className={activeTab === 'core' ? 'active' : ''} 
+	          onClick={() => setActiveTab('core')}
+	        >
+	          Core Rules
+	        </button>
+	        <button 
+	          className={activeTab === 'personas' ? 'active' : ''} 
+	          onClick={() => setActiveTab('personas')}
+	        >
+	          AI Personas
+	        </button>
+	        <button 
+	          className={activeTab === 'machines' ? 'active' : ''} 
+	          onClick={() => setActiveTab('machines')}
+	        >
+	          Machine Contexts
+	        </button>
+	        <button 
+	          className={activeTab === 'colors' ? 'active' : ''} 
+	          onClick={() => setActiveTab('colors')}
+	        >
+	          Interface Colors
+	        </button>
+	      </div>
+	
+	      <div className="settings-content">
+	        {activeTab === 'core' && (
+	          <div className="core-rules-settings">
+	            <h3>Edit Core System Rules</h3>
+	            <p className="help-text">These rules define the AI's fundamental identity, security, and base behavior. They are applied before any persona instructions.</p>
+	            <textarea
+	              value={coreRules.rules}
+	              onChange={(e) => setCoreRules({ rules: e.target.value })}
+	              rows="15"
+	              placeholder="Enter core system rules here..."
+	            />
+	          </div>
+	        )}
+	        {activeTab === 'colors' && (
+	          <div className="color-settings">
+	            <h3>Interface Color Customization</h3>
+	            <p className="help-text">Change the main interface colors. You will need to save and refresh the page for changes to take full effect.</p>
+	            <button onClick={handleRestoreColors} className="add-button" style={{ marginBottom: '15px' }}>Restore Default Colors</button>
+	            
+	            <div className="color-input-group">
+	              <label htmlFor="primary-color">Primary Color (e.g., Buttons, User Chat):</label>
+	              <input 
+	                type="color" 
+	                id="primary-color" 
+	                value={colors.primary}
+	                onChange={(e) => setColors({...colors, primary: e.target.value})}
+	              />
+	            </div>
+	            
+	            <div className="color-input-group">
+	              <label htmlFor="secondary-color">Secondary Color (e.g., AI Chat, Highlights):</label>
+	              <input 
+	                type="color" 
+	                id="secondary-color" 
+	                value={colors.secondary}
+	                onChange={(e) => setColors({...colors, secondary: e.target.value})}
+	              />
+	            </div>
+	            
+	            <div className="color-input-group">
+	              <label htmlFor="background-color">Background Color:</label>
+	              <input 
+	                type="color" 
+	                id="background-color" 
+	                value={colors.background}
+	                onChange={(e) => setColors({...colors, background: e.target.value})}
+	              />
+	            </div>
+	            
+	            <div className="color-input-group">
+	              <label htmlFor="text-color">Text Color:</label>
+	              <input 
+	                type="color" 
+	                id="text-color" 
+	                value={colors.text}
+	                onChange={(e) => setColors({...colors, text: e.target.value})}
+	              />
+	            </div>
+	          </div>
+	        )}
+	        {activeTab === 'personas' && (
           <div className="persona-settings">
 	            <h3>Define AI Persona</h3>
 	            <div className="persona-list-section">

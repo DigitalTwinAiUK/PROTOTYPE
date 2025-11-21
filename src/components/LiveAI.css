@@ -17,6 +17,9 @@
   overflow-y: auto;
   height: 100%;
   max-height: 100%;
+  display: flex; /* Use flexbox for better layout control */
+  flex-direction: column;
+  justify-content: space-between; /* Distribute space */
 }
 
 .live-ai-sidebar::-webkit-scrollbar {
@@ -33,37 +36,32 @@
 }
 
 .sidebar-section {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem; /* Reduced margin for better fit */
 }
 
 .settings-button {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: none;
+  /* position: absolute; - Removed absolute positioning */
+  /* top: 15px; */
+  /* right: 15px; */
+  background: #0f3460; /* Use primary color for button */
   border: none;
   color: #4ecca3;
-  font-size: 1.5rem;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: color 0.2s;
+  transition: background 0.2s;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  margin-top: 1rem;
+  width: 100%; /* Make it full width */
 }
 
 .settings-button:hover {
-  color: #3dba8c;
+  background: #0a274e; /* Darker shade on hover */
+  color: #4ecca3;
 }
 
-.add-machine-button {
-  width: 100%;
-  padding: 0.5rem;
-  margin-top: 0.5rem;
-  background-color: #0f3460;
-  color: #4ecca3;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  font-weight: bold;
-}
+/* .add-machine-button was removed from LiveAI.jsx, removing the style */
 
 .add-machine-button:hover {
   background-color: #0a274e;
