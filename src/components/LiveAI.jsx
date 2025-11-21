@@ -46,8 +46,8 @@ function LiveAI() {
 	  })
   const messagesEndRef = useRef(null)
 
-	  const machines = settings.machines
-	  const personas = settings.personas
+	  const machines = useMemo(() => settings.machines, [settings.machines]);
+	  const personas = useMemo(() => settings.personas, [settings.personas]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
