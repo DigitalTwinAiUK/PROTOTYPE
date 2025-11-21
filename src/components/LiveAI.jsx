@@ -46,8 +46,8 @@ function LiveAI() {
 	  })
   const messagesEndRef = useRef(null)
 
-	  const machines = useMemo(() => settings.machines, [settings.machines]);
-	  const personas = useMemo(() => settings.personas, [settings.personas]);
+	  const machines = settings.machines;
+	  const personas = settings.personas;
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -99,7 +99,6 @@ function LiveAI() {
       const apiUrl = 'https://forge.manus.ai'
 
 	      // Build context based on selected machine and persona
-	      // Use the stable 'machines' array for context lookup
 	      const currentMachine = machines.find(m => m.id === selectedMachine)
       const machineContextDocuments = currentMachine && selectedMachine !== 'none' 
         ? `\n\n=== MACHINE CONTEXT: ${currentMachine.name} ===\n${currentMachine.documents.map(doc => doc.content).join('\n\n')}`
