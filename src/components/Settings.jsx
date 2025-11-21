@@ -183,23 +183,36 @@ const MachinesTab = ({ machines, setMachines, selectedMachine, setSelectedMachin
 const ColorsTab = ({ colors, setColors, themes, setThemes, selectedTheme, setSelectedTheme, newThemeName, setNewThemeName, handleRestoreColors, handleSaveTheme, handleUpdateTheme, handleDeleteTheme, handleSave }) => {
   
   const handleColorChange = (key, value) => {
-    setColors(prev => {
-      const newColors = { ...prev, [key]: value };
-      // Immediately update LiveAI's state to apply colors to the UI
-      onUpdateSettings({ newSettings: { ...initialSettings, colors: newColors, themes, coreRules, personas, machines }, newCoreRules: coreRules, newColors });
-      return newColors;
-    });
+    setColors(prev => ({ ...prev, [key]: value }));
   };
+
+  // Function to propagate color changes to LiveAI for UI update
+  const propagateColors = useCallback((newColors) => {
+    onUpdateSettings({ 
+      newSettings: { ...initialSettings, colors: newColors, themes, coreRules, personas, machines }, 
+      newCoreRules: coreRules, 
+      newColors: newColors 
+    });
+  }, [onUpdateSettings, initialSettings, themes, coreRules, personas, machines]);
+
+  // Effect to immediately propagate color changes to LiveAI for UI update
+  useEffect(() => {
+    // Only propagate if the colors have actually changed from the initial state
+    // and we are not in the middle of a theme selection (which is handled below)
+    if (JSON.stringify(colors) !== JSON.stringify(themes[selectedTheme])) {
+      propagateColors(colors);
+    }
+  }, [colors, themes, selectedTheme, propagateColors]);
 
   // When a theme is selected, apply its colors to the color picker state
   useEffect(() => {
     if (themes[selectedTheme]) {
       const newColors = themes[selectedTheme];
       setColors(newColors);
-      // Immediately update LiveAI's state to apply colors to the UI
-      onUpdateSettings({ newSettings: { ...initialSettings, colors: newColors, themes, coreRules, personas, machines }, newCoreRules: coreRules, newColors });
+      // Propagate theme selection immediately to LiveAI for UI update
+      propagateColors(newColors);
     }
-  }, [selectedTheme, themes, setColors, onUpdateSettings, initialSettings, coreRules, personas, machines]);
+  }, [selectedTheme, themes, setColors, propagateColors]);
 
   return (
     <div className="color-settings">
